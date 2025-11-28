@@ -1,0 +1,48 @@
+# Flutter
+# Built application files
+*.apk
+*.ap_
+# Files for the ART/Dalvik VM
+*.dex
+# Java class files
+*.class
+# Generated files
+**/bin/
+**/gen/
+**/out/
+# Gradle files
+**/.gradle/
+**/build/
+# Local configuration file (sdk path, etc)
+**/local.properties
+## User settings
+**/xcuserdata/
+## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+**/DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+## Custom
+# Google API key and other resources
+app/GoogleService-Info.plist
+app/google-services.json
+# Plugins (already resolved through pubspec.yaml)
+**/.flutter-plugins
+**/.dart_tool/**
+
+
+# IDE
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
