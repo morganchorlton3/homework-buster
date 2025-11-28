@@ -46,3 +46,15 @@ app/google-services.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Terraform
+**/.terraform/*
+# Ignore variables files
+*.auto.tfvars
+# Ignore override files
+*.tfoverride
+# Ignore environment-specific files
+.envrc
+# Ignore CLI configuration files
+.terraformrc
+terraform.rc
