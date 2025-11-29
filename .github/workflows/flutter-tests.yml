@@ -12,11 +12,20 @@ jobs:
 
     defaults:
       run:
-        working-directory: app
+        working-directory: app  # your Flutter project folder
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Create .env for CI
+        run: |
+          cat << 'EOF' > .env
+          COGNITO_USER_POOL_ID=eu-west-2_JEBY7kG9f
+          COGNITO_CLIENT_ID=4ekv3gumkp5ld1kup48k26vuto
+          COGNITO_REGION=eu-west-2
+          API_BASE_URL=https://example.com
+          EOF
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
