@@ -18,13 +18,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create .env for CI
+      - name: Create .env for CI (dummy values)
         run: |
           cat << 'EOF' > .env
-          COGNITO_USER_POOL_ID=eu-west-2_JEBY7kG9f
-          COGNITO_CLIENT_ID=4ekv3gumkp5ld1kup48k26vuto
+          COGNITO_USER_POOL_ID=eu-west-2_DUMMYPOOL
+          COGNITO_CLIENT_ID=DUMMYCLIENTID123
           COGNITO_REGION=eu-west-2
-          API_BASE_URL=https://example.com
+          API_BASE_URL=https://dummy.example.com
           EOF
 
       - name: Set up Flutter
@@ -41,5 +41,5 @@ jobs:
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
-          name: flutter-coverage-lcov
-          path: coverage/lcov.info
+          name: flutter-coverage
+          path: app/coverage
