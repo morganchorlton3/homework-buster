@@ -58,3 +58,5 @@ app/google-services.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+*.env
