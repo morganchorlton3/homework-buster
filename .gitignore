@@ -60,3 +60,5 @@ app/google-services.json
 terraform.rc
 
 *.env
+
+**/coverage/
