@@ -33,6 +33,9 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
+          cache-key: flutter-${{ runner.os }}-${{ hashFiles('app/pubspec.lock') }}
+          cache-path: ${{ runner.temp }}/flutter_cache
 
       - name: Install lcov
         run: |
