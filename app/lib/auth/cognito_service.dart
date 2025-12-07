@@ -25,10 +25,21 @@ class CognitoService {
   Future<void> signUp({
     required String email,
     required String password,
+    String? firstName,
+    String? lastName,
   }) async {
     final userAttributes = [
       AttributeArg(name: 'email', value: email),
     ];
+
+    // Add first name and last name if provided
+    // Using 'given_name' and 'family_name' as standard Cognito attributes
+    if (firstName != null && firstName.isNotEmpty) {
+      userAttributes.add(AttributeArg(name: 'given_name', value: firstName));
+    }
+    if (lastName != null && lastName.isNotEmpty) {
+      userAttributes.add(AttributeArg(name: 'family_name', value: lastName));
+    }
 
     await _userPool.signUp(
       email,

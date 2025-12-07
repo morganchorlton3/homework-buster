@@ -9,6 +9,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _codeController = TextEditingController();
@@ -18,6 +20,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? _error;
 
   Future<void> _handleSignUp() async {
+    // Validate required fields
+    if (_firstNameController.text.trim().isEmpty) {
+      setState(() {
+        _error = 'Please enter your first name';
+      });
+      return;
+    }
+    if (_lastNameController.text.trim().isEmpty) {
+      setState(() {
+        _error = 'Please enter your last name';
+      });
+      return;
+    }
+    if (_emailController.text.trim().isEmpty) {
+      setState(() {
+        _error = 'Please enter your email';
+      });
+      return;
+    }
+    if (_passwordController.text.isEmpty) {
+      setState(() {
+        _error = 'Please enter a password';
+      });
+      return;
+    }
+
     setState(() {
       _loading = true;
       _error = null;
@@ -27,6 +55,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       await CognitoService.instance.signUp(
         email: _emailController.text.trim(),
         password: _passwordController.text,
+        firstName: _firstNameController.text.trim(),
+        lastName: _lastNameController.text.trim(),
       );
       setState(() {
         _awaitingConfirmation = true;
@@ -78,8 +108,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
           children: [
             if (!awaitingCode) ...[
               TextField(
+                controller: _firstNameController,
+                decoration: const InputDecoration(labelText: 'First Name'),
+                textCapitalization: TextCapitalization.words,
+              ),
+              const SizedBox(height: 12),
+              TextField(
+                controller: _lastNameController,
+                decoration: const InputDecoration(labelText: 'Last Name'),
+                textCapitalization: TextCapitalization.words,
+              ),
+              const SizedBox(height: 12),
+              TextField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: 'Email'),
+                keyboardType: TextInputType.emailAddress,
               ),
               const SizedBox(height: 12),
               TextField(

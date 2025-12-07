@@ -21,7 +21,7 @@ COGNITO_REGION=eu-west-2
   });
 
   group('SignUpScreen Widget Tests', () {
-    testWidgets('renders sign up form with email and password fields', (tester) async {
+    testWidgets('renders sign up form with all required fields', (tester) async {
       await tester.pumpWidget(
         const MaterialApp(
           home: SignUpScreen(),
@@ -29,6 +29,8 @@ COGNITO_REGION=eu-west-2
       );
 
       expect(find.text('Create parent account'), findsOneWidget);
+      expect(find.text('First Name'), findsOneWidget);
+      expect(find.text('Last Name'), findsOneWidget);
       expect(find.text('Email'), findsOneWidget);
       expect(find.text('Password'), findsOneWidget);
       expect(find.text('Sign up as parent'), findsOneWidget);
@@ -41,11 +43,15 @@ COGNITO_REGION=eu-west-2
         ),
       );
 
-      final emailField = find.byType(TextField).first;
-      final passwordField = find.byType(TextField).last;
+      // Find all text fields - should be 4: first name, last name, email, password
+      final textFields = find.byType(TextField);
+      expect(textFields, findsNWidgets(4));
 
-      await tester.enterText(emailField, 'test@example.com');
-      await tester.enterText(passwordField, 'password123');
+      // Enter data in all fields
+      await tester.enterText(textFields.at(0), 'John');
+      await tester.enterText(textFields.at(1), 'Doe');
+      await tester.enterText(textFields.at(2), 'test@example.com');
+      await tester.enterText(textFields.at(3), 'password123');
 
       final signUpButton = find.text('Sign up as parent');
       await tester.tap(signUpButton);
@@ -65,11 +71,15 @@ COGNITO_REGION=eu-west-2
         ),
       );
 
-      final emailField = find.byType(TextField).first;
-      final passwordField = find.byType(TextField).last;
+      // Find all text fields
+      final textFields = find.byType(TextField);
+      expect(textFields, findsNWidgets(4));
 
-      await tester.enterText(emailField, 'test@example.com');
-      await tester.enterText(passwordField, 'password123');
+      // Enter data in all required fields
+      await tester.enterText(textFields.at(0), 'John');
+      await tester.enterText(textFields.at(1), 'Doe');
+      await tester.enterText(textFields.at(2), 'test@example.com');
+      await tester.enterText(textFields.at(3), 'password123');
 
       final signUpButton = find.text('Sign up as parent');
       expect(signUpButton, findsOneWidget);
@@ -90,11 +100,14 @@ COGNITO_REGION=eu-west-2
         ),
       );
 
-      final emailField = find.byType(TextField).first;
-      final passwordField = find.byType(TextField).last;
-
-      await tester.enterText(emailField, 'invalid-email');
-      await tester.enterText(passwordField, 'short');
+      // Find all text fields
+      final textFields = find.byType(TextField);
+      
+      // Enter invalid data
+      await tester.enterText(textFields.at(0), 'John');
+      await tester.enterText(textFields.at(1), 'Doe');
+      await tester.enterText(textFields.at(2), 'invalid-email');
+      await tester.enterText(textFields.at(3), 'short');
 
       final signUpButton = find.text('Sign up as parent');
       await tester.tap(signUpButton);
@@ -113,7 +126,9 @@ COGNITO_REGION=eu-west-2
         ),
       );
 
-      final emailField = find.byType(TextField).first;
+      // Email field is the third field (index 2)
+      final textFields = find.byType(TextField);
+      final emailField = textFields.at(2);
       await tester.enterText(emailField, 'newuser@example.com');
       await tester.pump();
 
@@ -127,7 +142,9 @@ COGNITO_REGION=eu-west-2
         ),
       );
 
-      final passwordField = find.byType(TextField).last;
+      // Password field is the last field (index 3)
+      final textFields = find.byType(TextField);
+      final passwordField = textFields.at(3);
       final passwordTextField = tester.widget<TextField>(passwordField);
       
       expect(passwordTextField.obscureText, isTrue);

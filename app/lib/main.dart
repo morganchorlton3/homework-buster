@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
+import 'api/api_service.dart';
 import 'auth/auth_gate.dart';
 
 Future<void> main() async {
@@ -8,6 +9,9 @@ Future<void> main() async {
 
   // Load environment file
   await dotenv.load(fileName: ".env");
+
+  // Initialize API service
+  ApiService.instance.init();
 
   runApp(const HomeworkBusterApp());
 }

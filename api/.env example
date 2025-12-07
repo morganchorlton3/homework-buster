@@ -1,0 +1,9 @@
+# Cognito Configuration
+COGNITO_USER_POOL_ID=
+AWS_REGION=
+
+# CORS Configuration (optional - defaults to ["*"] if not set)
+# CORS_ALLOW_ORIGINS=*
+# CORS_ALLOW_CREDENTIALS=true
+
+# Note: COGNITO_CLIENT_ID is not used by the API, only by the mobile app
