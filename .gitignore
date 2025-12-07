@@ -40,25 +40,62 @@ app/google-services.json
 **/.dart_tool/**
 
 
-# IDE
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+**/coverage
+
+# Poetry
+poetry.lock
+.venv/
+venv/
+ENV/
+env/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.hypothesis/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
 
 # Terraform
-**/.terraform/*
-# Ignore variables files
-*.auto.tfvars
-# Ignore override files
-*.tfoverride
-# Ignore environment-specific files
-.envrc
-# Ignore CLI configuration files
-.terraformrc
-terraform.rc
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+**/builds/
 
-*.env
-
-**/coverage/
+# Lambda packaging
+*.zip
+lambda_package/
