@@ -1,29 +1,22 @@
 """
 Authentication router for JWT validation from Cognito.
 """
-import os
-from typing import Optional
-
 import jwt
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jwt import PyJWKClient
 
+from api.config import settings
+
 router = APIRouter()
 security = HTTPBearer()
 
-# Get Cognito User Pool ID from environment variable
-COGNITO_USER_POOL_ID = os.getenv("COGNITO_USER_POOL_ID")
-COGNITO_REGION = os.getenv("AWS_REGION", "us-east-1")
-
-if COGNITO_USER_POOL_ID:
-    # Construct JWKS URL for Cognito
-    JWKS_URL = (
-        f"https://cognito-idp.{COGNITO_REGION}.amazonaws.com/"
-        f"{COGNITO_USER_POOL_ID}/.well-known/jwks.json"
-    )
-    jwks_client = PyJWKClient(JWKS_URL)
-else:
+# Initialize JWKS client with settings
+try:
+    jwks_client = PyJWKClient(settings.jwks_url)
+except Exception:
+    # If settings are not properly configured, jwks_client will be None
+    # and verify_token will return a 503 error
     jwks_client = None
 
 
@@ -68,11 +61,7 @@ async def verify_token(
         )
 
         # Verify token issuer matches Cognito User Pool
-        expected_issuer = (
-            f"https://cognito-idp.{COGNITO_REGION}.amazonaws.com/"
-            f"{COGNITO_USER_POOL_ID}"
-        )
-        if decoded_token.get("iss") != expected_issuer:
+        if decoded_token.get("iss") != settings.expected_issuer:
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid token issuer",

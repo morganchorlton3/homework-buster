@@ -1,3 +1,6 @@
+# Get current AWS region
+data "aws_region" "current" {}
+
 module "api_container" {
   source  = "terraform-aws-modules/lambda/aws//modules/docker-build"
   version = "~> 8.0"
@@ -44,6 +47,7 @@ module "api_lambda" {
 
   environment_variables = {
     COGNITO_USER_POOL_ID = var.cognito_user_pool_id
+    AWS_REGION           = data.aws_region.current.name
   }
 
   cloudwatch_logs_retention_in_days = 7

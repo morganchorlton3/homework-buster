@@ -4,6 +4,7 @@ FastAPI application for Homework Buster API.
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from api.config import settings
 from api.routers import auth
 
 app = FastAPI(
@@ -12,11 +13,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Configure CORS for mobile app
+# Configure CORS for mobile app using settings
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Configure appropriately for production
-    allow_credentials=True,
+    allow_origins=settings.parse_cors_origins(),
+    allow_credentials=settings.cors_allow_credentials,
     allow_methods=["*"],
     allow_headers=["*"],
 )
