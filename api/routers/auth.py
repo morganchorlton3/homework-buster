@@ -97,12 +97,27 @@ async def validate_token(token_data: dict = Depends(verify_token)):
     Returns:
         User information from the validated token
     """
+    # Extract first_name and last_name from token
+    # Cognito may store these as 'given_name'/'family_name' or custom attributes
+    first_name = (
+        token_data.get("given_name")
+        or token_data.get("custom:first_name")
+        or token_data.get("first_name")
+    )
+    last_name = (
+        token_data.get("family_name")
+        or token_data.get("custom:last_name")
+        or token_data.get("last_name")
+    )
+
     return {
         "valid": True,
         "user_id": token_data.get("sub"),
         "email": token_data.get("email"),
         "username": token_data.get("cognito:username"),
         "token_use": token_data.get("token_use"),
+        "first_name": first_name,
+        "last_name": last_name,
     }
 
 
@@ -114,10 +129,25 @@ async def get_current_user(token_data: dict = Depends(verify_token)):
     Returns:
         Current user information from the validated token
     """
+    # Extract first_name and last_name from token
+    # Cognito may store these as 'given_name'/'family_name' or custom attributes
+    first_name = (
+        token_data.get("given_name")
+        or token_data.get("custom:first_name")
+        or token_data.get("first_name")
+    )
+    last_name = (
+        token_data.get("family_name")
+        or token_data.get("custom:last_name")
+        or token_data.get("last_name")
+    )
+
     return {
         "user_id": token_data.get("sub"),
         "email": token_data.get("email"),
         "username": token_data.get("cognito:username"),
         "token_use": token_data.get("token_use"),
+        "first_name": first_name,
+        "last_name": last_name,
     }
 

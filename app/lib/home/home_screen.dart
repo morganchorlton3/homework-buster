@@ -135,6 +135,18 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // Welcome message
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                _user!.firstName != null
+                    ? 'Welcome, ${_user!.firstName}!'
+                    : 'Welcome!',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(16),
@@ -168,6 +180,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const Divider(height: 24),
                     _buildInfoRow('User ID', _user!.userId),
+                    if (_user!.firstName != null)
+                      _buildInfoRow('First Name', _user!.firstName!),
+                    if (_user!.lastName != null)
+                      _buildInfoRow('Last Name', _user!.lastName!),
                     if (_user!.email != null)
                       _buildInfoRow('Email', _user!.email!),
                     if (_user!.username != null)
