@@ -99,3 +99,5 @@ Thumbs.db
 # Lambda packaging
 *.zip
 lambda_package/
+
+**.env
